@@ -1,5 +1,6 @@
 package br.com.ibmec.cloud.cargallery.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class UsuarioLista {
     private String nome;
 
     @ManyToOne
+    @JsonIgnore
     private Usuario usuario;
 
     @OneToMany
