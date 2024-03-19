@@ -1,6 +1,7 @@
 package br.com.ibmec.cloud.cargallery.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,6 +26,7 @@ public class Carro {
     private String imagem;
 
     @ManyToOne()
+    @JsonIgnore
     private Marca marca;
 
 

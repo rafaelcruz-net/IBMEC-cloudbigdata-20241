@@ -12,6 +12,10 @@ import java.util.UUID;
 @Entity
 public class Marca {
 
+    public Marca() {
+        this.carros = new ArrayList<>();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -21,5 +25,5 @@ public class Marca {
 
     @OneToMany
     @JoinColumn(name = "marca_id", referencedColumnName = "id")
-    private ArrayList<Carro> carros;
+    private List<Carro> carros;
 }
