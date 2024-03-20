@@ -27,7 +27,7 @@ public class Usuario {
     private String nome;
 
     @Column
-    @NotBlank(message = "Campo nome é obrigatório")
+    @NotBlank(message = "Campo email é obrigatório")
     @Email(message = "Campo email não está em um formato correto")
     private String email;
 
