@@ -29,5 +29,4 @@ public class Carro {
     @JsonIgnore
     private Marca marca;
 
-
 }
