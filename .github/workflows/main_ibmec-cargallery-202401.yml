@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - ibmec-cloud-2024-cargallery
+name: Build and deploy JAR app to Azure Web App - ibmec-cargallery-202401
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v1
         with:
-          java-version: '21'
+          java-version: 21-ea
 
       - name: Build with Maven
         run: mvn clean install
@@ -31,14 +31,14 @@ jobs:
           path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     needs: build
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
-
+  
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -48,15 +48,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_87BFE80C736D43659168CA4D02461447 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_890FB88F72FE4E3FB1606FE4BAAE30C4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CF250E320ACE4D08BECED129FFC0687D }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DB3B246EF5084D65AA8FBE526B07929E }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4EE3142A98734FC0868A0B4D28EB4630 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_794F650F3F1244E39555AB20A0B9E7F1 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ibmec-cloud-2024-cargallery'
+          app-name: 'ibmec-cargallery-202401'
           slot-name: 'Production'
           package: '*.jar'
           
