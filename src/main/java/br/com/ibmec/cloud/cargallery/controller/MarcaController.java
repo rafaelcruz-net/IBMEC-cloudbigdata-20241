@@ -95,4 +95,9 @@ public class MarcaController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping
+    public ResponseEntity<List<Marca>> obterMarcar() {
+        return new ResponseEntity<>(this.repository.findAll(), HttpStatus.OK) ;
+    }
+
 }
