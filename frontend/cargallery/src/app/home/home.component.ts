@@ -4,6 +4,7 @@ import { MarcaService } from '../services/marca.service';
 import { Marca } from '../model/marca';
 import { FilterComponent } from '../shared/filter/filter.component';
 import { CardCarComponent } from '../shared/card-car/card-car.component';
+import { Carro } from '../model/carros';
 
 @Component({
   selector: 'app-home',
@@ -13,18 +14,24 @@ import { CardCarComponent } from '../shared/card-car/card-car.component';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-   marca = new Array<Marca>();
+   carro = new Array<Carro>();
 
    constructor(private marcaService: MarcaService) { }
 
-   public adicionarProduto() {
-      this.marcaService.obterMarcas().subscribe(response => {
-          this.marca = response;
-          console.log(response);
-      });    
-   }
-
    public onFilter($event: any) {
-      console.log($event);
+      let id = $event;
+      this.carro = [];
+      if (id !== 'ALL') {
+         this.marcaService.obterCarroMarca(id).subscribe(response => {
+            this.carro = response; 
+         });
+      } else {
+         this.marcaService.obterMarcas().subscribe(marcas => {
+            for (const item of marcas) {
+               this.carro.push(...item.carros);
+            }
+         });
+      }
+
    }
 }

@@ -11,9 +11,11 @@
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <div class="col">
-        <app-card-car></app-card-car>
-      </div>
+      @for (item of carro; track $index) {
+        <div class="col">
+          <app-card-car [car]="item"></app-card-car>
+        </div>
+      }
     </div>
   </div>
 </div>

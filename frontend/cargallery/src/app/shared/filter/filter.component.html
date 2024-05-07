@@ -4,7 +4,7 @@
       <span class="visually-hidden">Marcas</span>
     </button>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Ver todos os carros</a></li>
+        <li><a class="dropdown-item" href="#" (click)="filter('ALL');">Ver todos os carros</a></li>
         @for (item of marca; track $index) {
             <li><a class="dropdown-item" href="#" (click)="filter(item.id);">{{item.nome}}</a></li>
         }
