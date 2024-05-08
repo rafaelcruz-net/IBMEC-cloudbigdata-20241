@@ -1,0 +1,44 @@
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="col">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="insira seu email"
+            name="email"
+            [formControl]="email"
+          />
+          @if (this.email.dirty) {
+            @if (this.email.invalid && this.email.errors?.['required']) {
+                <span class="invalid"> Email Obrigátorio </span>
+            }
+            @else if (this.email.invalid && this.email.errors?.['email']) {
+                <span class="invalid"> Email não está em um formato correto </span>
+            }
+          }
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Senha</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="insira sua senha"
+            name="password"
+            [formControl]="password"
+          />
+          @if (this.password.dirty && (this.password.invalid && this.password.errors?.['required'])) {
+            <span class="invalid"> Senha é obrigátoria </span>
+          }
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary mb-3" style="margin-top: 15px;" (click)="login();">Login</button>
+          &nbsp;
+          <button class="btn btn-outline-primary">Criar Conta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
