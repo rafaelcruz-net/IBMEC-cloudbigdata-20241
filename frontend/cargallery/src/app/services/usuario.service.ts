@@ -25,4 +25,20 @@ export class UsuarioService {
     return this.http.post<Usuario>(`${this.url}/login`, body, options);
   }
 
+  public favoritar(id:String, idCar: String) {
+    let body = {  
+    };
+    let options = {
+      headers: environment.headers
+    };
+    return this.http.post(`${this.url}/${id}/favoritar/${idCar}`,body, options);
+  }
+
+  public obter(id:String) :Observable<Usuario> {
+    let options = {
+      headers: environment.headers
+    };
+    return this.http.get<Usuario>(`${this.url}/${id}`, options)
+  }
+
 }

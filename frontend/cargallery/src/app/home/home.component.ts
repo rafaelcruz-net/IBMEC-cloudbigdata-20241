@@ -5,7 +5,7 @@ import { Marca } from '../model/marca';
 import { FilterComponent } from '../shared/filter/filter.component';
 import { CardCarComponent } from '../shared/card-car/card-car.component';
 import { Carro } from '../model/carros';
-import { UserAutenticatedGuard } from '../guard/user-autenticated.guard';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -20,18 +20,18 @@ export class HomeComponent implements OnInit {
    constructor(private marcaService: MarcaService) { }
    
    ngOnInit(): void {
-       //this.onFilter('ALL');
+       this.onFilter('ALL');
    }
 
    public onFilter($event: any) {
       let id = $event;
       this.carro = [];
       if (id !== 'ALL') {
-         this.marcaService.obterCarroMarca(id).subscribe(response => {
+         this.marcaService.obterCarroMarca(id).pipe(take(1)).subscribe(response => {
             this.carro = response; 
          });
       } else {
-         this.marcaService.obterMarcas().subscribe(marcas => {
+         this.marcaService.obterMarcas().pipe(take(1)).subscribe(marcas => {
             for (const item of marcas) {
                this.carro.push(...item.carros);
             }
