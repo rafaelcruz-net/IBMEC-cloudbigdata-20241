@@ -6,12 +6,15 @@ import br.com.ibmec.cloud.cargallery.models.Carro;
 import br.com.ibmec.cloud.cargallery.models.Marca;
 import br.com.ibmec.cloud.cargallery.repository.CarroRepository;
 import br.com.ibmec.cloud.cargallery.repository.MarcaRepository;
+import br.com.ibmec.cloud.cargallery.service.AzureStorageAccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +28,9 @@ public class MarcaController {
 
     @Autowired
     private CarroRepository carroRepository;
+
+    @Autowired
+    private AzureStorageAccountService accountService;
 
     @PostMapping
     public ResponseEntity<Marca> criar(@Valid @RequestBody MarcaRequest request) {
@@ -98,6 +104,14 @@ public class MarcaController {
     @GetMapping
     public ResponseEntity<List<Marca>> obterMarcar() {
         return new ResponseEntity<>(this.repository.findAll(), HttpStatus.OK) ;
+    }
+
+    @PostMapping("uploadImage")
+    public ResponseEntity uploadToAzure(@RequestParam("file") MultipartFile file) throws IOException {
+
+        this.accountService.uploadFileToAzure(file);
+        return new ResponseEntity(HttpStatus.OK);
+
     }
 
 }
