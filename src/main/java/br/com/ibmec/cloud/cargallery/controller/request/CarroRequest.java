@@ -9,5 +9,5 @@ public class CarroRequest {
     private UUID id;
     private String nome;
     private String descricao;
-    private String imagem;
+    private String imagemBase64;
 }

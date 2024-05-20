@@ -27,4 +27,12 @@ export class MarcaService {
     };
     return this.http.get<Array<Carro>>(`${this.url}/${id}/carro`, options);
   }
+
+  public criarCarro(request:any, id:String = "89c4a77d-5d41-4c0b-9826-0941e3f68e3e") {
+    let options = {
+      headers: environment.headers
+    };
+  
+    return this.http.post<Marca>(`${this.url}/${id}/carro`, request, options);
+  }
 }

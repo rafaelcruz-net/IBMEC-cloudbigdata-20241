@@ -33,7 +33,7 @@ public class MarcaController {
     private AzureStorageAccountService accountService;
 
     @PostMapping
-    public ResponseEntity<Marca> criar(@Valid @RequestBody MarcaRequest request) {
+    public ResponseEntity<Marca> criar(@Valid @RequestBody MarcaRequest request) throws Exception {
 
         Marca marca = new Marca();
         marca.setNome(request.getNome());
@@ -47,7 +47,11 @@ public class MarcaController {
             carro.setId(UUID.randomUUID());
             carro.setNome(item.getNome());
             carro.setDescricao(item.getDescricao());
-            carro.setImagem(item.getImagem());
+
+            //Sobe a imagem para o Azure
+            String imageUrl = this.accountService.uploadFileToAzure(item.getImagemBase64());
+            carro.setImagem(imageUrl);
+
             carro.setMarca(marca);
 
             //Associa a marca ao carro
@@ -69,7 +73,7 @@ public class MarcaController {
     }
 
     @PostMapping("{id}/carro")
-    public ResponseEntity<Marca> associarCarro(@PathVariable("id") UUID id, @Valid @RequestBody CarroRequest request) {
+    public ResponseEntity<Marca> associarCarro(@PathVariable("id") UUID id, @Valid @RequestBody CarroRequest request) throws Exception {
         Optional<Marca> optMarca = this.repository.findById(id);
 
         if (optMarca.isEmpty() == true) {
@@ -83,7 +87,11 @@ public class MarcaController {
         Carro carro = new Carro();
         carro.setNome(request.getNome());
         carro.setDescricao(request.getDescricao());
-        carro.setImagem(request.getImagem());
+
+        //Sobe a imagem para o Azure
+        String imageUrl = this.accountService.uploadFileToAzure(request.getImagemBase64());
+        carro.setImagem(imageUrl);
+
         carro.setMarca(marca);
         marca.getCarros().add(carro);
 
@@ -104,14 +112,6 @@ public class MarcaController {
     @GetMapping
     public ResponseEntity<List<Marca>> obterMarcar() {
         return new ResponseEntity<>(this.repository.findAll(), HttpStatus.OK) ;
-    }
-
-    @PostMapping("uploadImage")
-    public ResponseEntity uploadToAzure(@RequestParam("file") MultipartFile file) throws IOException {
-
-        this.accountService.uploadFileToAzure(file);
-        return new ResponseEntity(HttpStatus.OK);
-
     }
 
 }
