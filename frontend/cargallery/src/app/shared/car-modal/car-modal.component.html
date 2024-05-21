@@ -9,15 +9,13 @@
 </button>
 
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="car-modal"
-  tabindex="-1"
->
+<div class="modal fade" id="car-modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Criar novo Carro
+        </h1>
         <button
           type="button"
           class="btn-close"
@@ -27,55 +25,75 @@
       </div>
       <div class="modal-body">
         <div class="container">
-            <div class="row row-cols-1 row-cols-sm-12 row-cols-md-12 g-12">
-              <div class="col">
-                <div class="mb-12">
-                  <label for="exampleFormControlInput1" class="form-label">Nome</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Nome do carro"
-                    name="nome"
-                    [formControl]="nome"
-                  />
-                  @if (this.nome.dirty) {
-                    @if (this.nome.invalid && this.nome.errors?.['required']) {
-                        <span class="invalid"> Nome do Carro Obrigátorio </span>
-                    }
+          <div class="row row-cols-1 row-cols-sm-12 row-cols-md-12 g-12">
+            <div class="col">
+              <div class="mb-12">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Nome</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Nome do carro"
+                  name="nome"
+                  [formControl]="nome"
+                />
+                @if (this.nome.dirty) { @if (this.nome.invalid &&
+                this.nome.errors?.['required']) {
+                <span class="invalid"> Nome do Carro Obrigátorio </span>
+                } }
+              </div>
+              <div class="mb-12">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Descricao</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="descrição do carro"
+                  name="descricao"
+                  [formControl]="descricao"
+                />
+                @if (this.descricao.dirty && (this.descricao.invalid &&
+                this.descricao.errors?.['required'])) {
+                <span class="invalid"> Senha é obrigátoria </span>
+                }
+              </div>
+              <div class="mb-12">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Imagem</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  placeholder="Selecione a imagem do carro"
+                  id="fileImg"
+                />
+              </div>
+              <div class="mb-12">
+                <label for="exampleFormControlInput1" class="form-label"
+                  >Marca</label
+                >
+                <select class="form-select" name="marca" [formControl]="marca">
+                  <option selected value="">Selecione a marca</option>
+                  @for (item of itensMarca; track $index) {
+                    <option [value]="item.id">{{item.nome}}</option>
                   }
-                </div>
-                <div class="mb-12">
-                  <label for="exampleFormControlInput1" class="form-label">Descricao</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="descrição do carro"
-                    name="descricao"
-                    [formControl]="descricao"
-                  />
-                  @if (this.descricao.dirty && (this.descricao.invalid && this.descricao.errors?.['required'])) {
-                    <span class="invalid"> Senha é obrigátoria </span>
-                  }
-                </div>
-                <div class="mb-12">
-                    <label for="exampleFormControlInput1" class="form-label">Imagem</label>
-                    <input
-                      type="file"
-                      class="form-control"
-                      placeholder="Selecione a imagem do carro"
-                      id="fileImg"
-                    />
-                  </div>
-  
+                </select>
+                @if (this.marca.dirty && (this.marca.invalid &&
+                this.marca.errors?.['required'])) {
+                <span class="invalid"> Marca é obrigátoria </span>
+                }
               </div>
             </div>
           </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" id="btnClose" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button class="btn btn-primary" (click)="criar();">Criar</button>
+        <button class="btn btn-primary" (click)="criar()">Criar</button>
       </div>
     </div>
   </div>

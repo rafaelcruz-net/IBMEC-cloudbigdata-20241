@@ -6,11 +6,12 @@ import { FilterComponent } from '../shared/filter/filter.component';
 import { CardCarComponent } from '../shared/card-car/card-car.component';
 import { Carro } from '../model/carros';
 import { take } from 'rxjs';
+import { CarModalComponent } from '../shared/car-modal/car-modal.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FilterComponent, CardCarComponent],
+  imports: [CommonModule, FilterComponent, CardCarComponent, CarModalComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -21,6 +22,10 @@ export class HomeComponent implements OnInit {
    
    ngOnInit(): void {
        this.onFilter('ALL');
+   }
+
+   public reload() {
+      this.onFilter('ALL');
    }
 
    public onFilter($event: any) {
