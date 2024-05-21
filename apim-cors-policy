@@ -1,0 +1,18 @@
+------------- ADICIONAR NO AZURE API MANAGEMENT --------
+--- CLICAR EM TODAS API (ALL APIS) E IR EM INBOUND PROCESSING E CLICAR EM ADD POLICY -----
+------------------------------------------------------------------------------------------
+
+<cors allow-credentials="true">
+            <allowed-origins>
+                <origin>---- TROCAR PARA SEU ENDERECO ------</origin>
+            </allowed-origins>
+            <allowed-methods preflight-result-max-age="300">
+                <method>*</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+            <expose-headers>
+                <header>*</header>
+            </expose-headers>
+        </cors>
