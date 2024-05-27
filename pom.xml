@@ -60,6 +60,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.azure</groupId>
+			<artifactId>azure-core</artifactId>
+			<version>1.49.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.azure</groupId>
 			<artifactId>azure-storage-blob</artifactId>
 			<version>12.23.0</version>
 		</dependency>
@@ -68,6 +73,12 @@
 			<artifactId>azure-storage-common</artifactId>
 			<version>12.23.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.azure</groupId>
+			<artifactId>azure-search-documents</artifactId>
+			<version>11.6.4</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -6,6 +6,7 @@ import br.com.ibmec.cloud.cargallery.models.Carro;
 import br.com.ibmec.cloud.cargallery.models.Marca;
 import br.com.ibmec.cloud.cargallery.repository.CarroRepository;
 import br.com.ibmec.cloud.cargallery.repository.MarcaRepository;
+import br.com.ibmec.cloud.cargallery.service.AzureSearchService;
 import br.com.ibmec.cloud.cargallery.service.AzureStorageAccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class MarcaController {
 
     @Autowired
     private AzureStorageAccountService accountService;
+
+    @Autowired
+    private AzureSearchService searchService;
 
     @PostMapping
     public ResponseEntity<Marca> criar(@Valid @RequestBody MarcaRequest request) throws Exception {
@@ -59,6 +63,9 @@ public class MarcaController {
 
             //Salva no banco de dados
             this.carroRepository.save(carro);
+
+            //Indexa no Azure Search
+            this.searchService.index(carro.getId(), marca.getNome(), carro.getNome());
         }
 
 
@@ -89,14 +96,17 @@ public class MarcaController {
         carro.setDescricao(request.getDescricao());
 
         //Sobe a imagem para o Azure
-        String imageUrl = this.accountService.uploadFileToAzure(request.getImagemBase64());
-        carro.setImagem(imageUrl);
+        //String imageUrl = this.accountService.uploadFileToAzure(request.getImagemBase64());
+        //carro.setImagem(imageUrl);
 
         carro.setMarca(marca);
         marca.getCarros().add(carro);
 
         //Salva o carro e associa a marca
         this.carroRepository.save(carro);
+
+        //Indexa no Azure Search
+        this.searchService.index(carro.getId(), marca.getNome(), carro.getNome());
 
         //Responde para o usuário
         return new ResponseEntity<>(marca, HttpStatus.CREATED);
