@@ -6,6 +6,7 @@ import br.com.ibmec.cloud.cargallery.models.Carro;
 import br.com.ibmec.cloud.cargallery.models.Marca;
 import br.com.ibmec.cloud.cargallery.repository.CarroRepository;
 import br.com.ibmec.cloud.cargallery.repository.MarcaRepository;
+import br.com.ibmec.cloud.cargallery.service.AzureSearchIndex;
 import br.com.ibmec.cloud.cargallery.service.AzureSearchService;
 import br.com.ibmec.cloud.cargallery.service.AzureStorageAccountService;
 import jakarta.validation.Valid;
@@ -96,8 +97,8 @@ public class MarcaController {
         carro.setDescricao(request.getDescricao());
 
         //Sobe a imagem para o Azure
-        //String imageUrl = this.accountService.uploadFileToAzure(request.getImagemBase64());
-        //carro.setImagem(imageUrl);
+        String imageUrl = this.accountService.uploadFileToAzure(request.getImagemBase64());
+        carro.setImagem(imageUrl);
 
         carro.setMarca(marca);
         marca.getCarros().add(carro);
@@ -122,6 +123,11 @@ public class MarcaController {
     @GetMapping
     public ResponseEntity<List<Marca>> obterMarcar() {
         return new ResponseEntity<>(this.repository.findAll(), HttpStatus.OK) ;
+    }
+
+    @GetMapping("/autocomplete")
+    public ResponseEntity<List<AzureSearchIndex>> autocomplete(@RequestParam String search) {
+        return  new ResponseEntity<>(this.searchService.suggester(search), HttpStatus.OK);
     }
 
 }
