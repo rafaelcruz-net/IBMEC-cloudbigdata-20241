@@ -4,6 +4,8 @@
       <div class="col">
         <app-filter (filterAction)="onFilter($event);"></app-filter>
         <app-car-modal style="margin-left: 10px;" (onCreated)="reload();"></app-car-modal>
+        <br />
+        <app-search style="margin-left: 10px;" (onSelectedItem)="filterCar($event);" (onClearedItem)="reload();" ></app-search>
       </div>
     </div>
   </div>

@@ -7,11 +7,12 @@ import { CardCarComponent } from '../shared/card-car/card-car.component';
 import { Carro } from '../model/carros';
 import { take } from 'rxjs';
 import { CarModalComponent } from '../shared/car-modal/car-modal.component';
+import { SearchComponent } from '../shared/search/search.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FilterComponent, CardCarComponent, CarModalComponent],
+  imports: [CommonModule, FilterComponent, CardCarComponent, CarModalComponent, SearchComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -26,6 +27,12 @@ export class HomeComponent implements OnInit {
 
    public reload() {
       this.onFilter('ALL');
+   }
+
+   public filterCar($event:any) {
+     let result = this.carro.filter(x => x.id == $event);
+     this.carro = [];
+     this.carro = result;
    }
 
    public onFilter($event: any) {

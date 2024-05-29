@@ -35,4 +35,12 @@ export class MarcaService {
   
     return this.http.post<Marca>(`${this.url}/${id}/carro`, request, options);
   }
+
+  public autocomplete(searchText: String): Observable<any> {
+    let options = {
+      headers: environment.headers
+    };
+    return this.http.get(`${this.url}/autocomplete?search=${searchText}`, options);
+    
+  }
 }
